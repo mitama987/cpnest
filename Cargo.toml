@@ -1,0 +1,29 @@
+[package]
+name = "cpnest"
+version = "0.1.0"
+edition = "2021"
+description = "GitHub Copilot CLI-aware terminal multiplexer (Windows first)"
+license = "MIT"
+repository = "https://github.com/mitama987/cpnest"
+readme = "README.md"
+keywords = ["copilot", "tui", "multiplexer", "pty", "terminal"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+ratatui = "0.29"
+crossterm = { version = "0.28", features = ["event-stream"] }
+portable-pty = "0.9"
+vt100 = "0.15"
+anyhow = "1"
+thiserror = "2"
+ignore = "0.4"
+
+[dependencies.git2]
+version = "0.20"
+default-features = false
+# Avoid OpenSSL pain on Windows — no HTTPS/SSH fetch needed for status/branch.
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true
