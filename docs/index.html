@@ -285,9 +285,9 @@
     <a class="brand" href="#">cp<span>nest</span></a>
     <ul>
       <li><a href="#install">Install</a></li>
-      <li><a href="#troubleshoot">Help</a></li>
       <li><a href="#keys">Keys</a></li>
       <li><a href="#sidebar">Sidebar</a></li>
+      <li><a href="#troubleshoot">Help</a></li>
       <li><a href="https://github.com/mitama987/cpnest" target="_blank" rel="noopener">GitHub</a></li>
     </ul>
   </div>
@@ -320,7 +320,7 @@
     <button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500);">Copy</button>
   </div>
   <p style="color:var(--dim);font-size:0.88rem;margin-top:0.9rem;">
-    No Rust toolchain? <a href="#install">Download the pre-built <code>cpnest.exe</code></a> from the latest Release.
+    No Rust toolchain? <a href="#install">Grab the pre-built <code>cpnest.exe</code></a> from the latest Release.
   </p>
 </section>
 
@@ -430,47 +430,7 @@ cwd:   ~/projects/cpnest</div>
     system shell so the multiplexer is still usable.
   </p>
 
-  <h3 style="margin-top:2rem;">Pre-built binary <span class="mono" style="color:var(--copilot);font-weight:400;font-size:0.9rem;">(easiest — no Rust toolchain)</span></h3>
-  <p>
-    Grab <code>cpnest.exe</code> from
-    <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">the latest GitHub Release</a>.
-    Two ways, pick whichever works in your network:
-  </p>
-
-  <p style="margin-top:1.2rem;margin-bottom:0.4rem;"><strong>① PowerShell one-liner</strong> <span style="color:var(--dim);font-size:0.9rem;">— fastest when your proxy allows direct GitHub Releases downloads</span></p>
-<pre class="code"><span class="c"># download into ~/.local/bin (create it if missing)</span>
-<span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
-<span class="p">&gt;</span> iwr https://github.com/mitama987/cpnest/releases/latest/download/cpnest.exe `
-    -OutFile $HOME\.local\bin\cpnest.exe
-
-<span class="c"># add ~/.local/bin to the user's PATH (one-time; re-reads User scope only)</span>
-<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable(
-    "PATH",
-    [Environment]::GetEnvironmentVariable("PATH", "User") + ";$HOME\.local\bin",
-    "User")</pre>
-
-  <p style="margin-top:1.2rem;margin-bottom:0.4rem;"><strong>② Manual browser download</strong> <span style="color:var(--dim);font-size:0.9rem;">— most robust behind Zscaler / corporate proxies that block <code>iwr</code> / <code>curl.exe</code> .exe fetches</span></p>
-<pre class="code"><span class="c"># 1. Open in your browser and click cpnest.exe under Assets:</span>
-<span class="c">#    https://github.com/mitama987/cpnest/releases/latest</span>
-
-<span class="c"># 2. Copy into ~/.local/bin</span>
-<span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
-<span class="p">&gt;</span> Copy-Item $HOME\Downloads\cpnest.exe $HOME\.local\bin\cpnest.exe
-
-<span class="c"># 3. Add to PATH (one-time)</span>
-<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable(
-    "PATH",
-    [Environment]::GetEnvironmentVariable("PATH", "User") + ";$HOME\.local\bin",
-    "User")</pre>
-
-  <p style="color:var(--dim);font-size:0.92rem;">
-    <strong>Open a new terminal</strong> after setting PATH and <code>cpnest</code> will be available
-    from any directory. The binary is unsigned — on first run Windows SmartScreen may warn; click
-    <em>More info &rarr; Run anyway</em>, or preemptively unblock with
-    <code>Unblock-File $HOME\.local\bin\cpnest.exe</code>.
-  </p>
-
-  <h3 style="margin-top:2rem;">From source via cargo <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(if you have rustup)</span></h3>
+  <h3 style="margin-top:2rem;">From source via cargo <span class="mono" style="color:var(--copilot);font-weight:400;font-size:0.9rem;">(recommended — if you have rustup)</span></h3>
 <pre class="code"><span class="p">$</span> cargo install --git https://github.com/mitama987/cpnest</pre>
   <p style="color:var(--dim);font-size:0.92rem;">
     Builds everything (including <code>libgit2-sys</code>, which takes a minute)
@@ -482,6 +442,31 @@ cwd:   ~/projects/cpnest</div>
 <span class="p">&gt;</span> cd cpnest
 <span class="p">&gt;</span> pwsh .\scripts\install.ps1</pre>
 
+  <h3 style="margin-top:2rem;">Manual download <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(no Rust toolchain needed)</span></h3>
+  <p>
+    Grab <code>cpnest.exe</code> from
+    <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">the latest GitHub Release</a>
+    via your browser, then drop it on PATH:
+  </p>
+<pre class="code"><span class="c"># 1. Open in your browser and click cpnest.exe under Assets:</span>
+<span class="c">#    https://github.com/mitama987/cpnest/releases/latest</span>
+
+<span class="c"># 2. Copy into ~/.local/bin</span>
+<span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
+<span class="p">&gt;</span> Copy-Item $HOME\Downloads\cpnest.exe $HOME\.local\bin\cpnest.exe
+
+<span class="c"># 3. Add to PATH (one-time; re-reads User scope only)</span>
+<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable(
+    "PATH",
+    [Environment]::GetEnvironmentVariable("PATH", "User") + ";$HOME\.local\bin",
+    "User")</pre>
+  <p style="color:var(--dim);font-size:0.92rem;">
+    <strong>Open a new terminal</strong> after setting PATH and <code>cpnest</code> will be available
+    from any directory. The binary is unsigned — on first run Windows SmartScreen may warn; click
+    <em>More info &rarr; Run anyway</em>, or preemptively unblock with
+    <code>Unblock-File $HOME\.local\bin\cpnest.exe</code>.
+  </p>
+
   <h3 style="margin-top:2rem;">Launch</h3>
 <pre class="code"><span class="p">$</span> cpnest                     <span class="c"># use cwd as the first pane's directory</span>
 <span class="p">$</span> cpnest path/to/project</pre>
@@ -490,72 +475,6 @@ cwd:   ~/projects/cpnest</div>
     <kbd>Ctrl+W</kbd> to close individual panes. If the <code>copilot</code> binary is
     at a non-standard location, set <code>CPNEST_COPILOT_BIN</code> to the absolute path.
   </p>
-</section>
-
-<section id="troubleshoot" class="troubles">
-  <h2>Troubleshooting</h2>
-  <p>
-    Real-world issues people have hit installing cpnest from corporate / proxied
-    networks, with the error strings verbatim so you can find this page via
-    search. Most of these aren't cpnest bugs — they're environment mismatches
-    that resolve by switching to the pre-built binary path.
-  </p>
-
-  <div class="trouble">
-    <h3>1. <code>winget install</code> fails with 403 Forbidden</h3>
-<pre class="code error">Download request status is not success. 0x80190193 : Forbidden (403).</pre>
-    <p><strong>Cause:</strong> Your corporate proxy (Zscaler, Netskope, etc.) is blocking requests to <code>static.rust-lang.org</code> or other download hosts that winget reaches out to.</p>
-    <p><strong>Fix:</strong> Skip winget. Grab <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">cpnest.exe</a> from the Releases page via your browser — the browser typically gets through the proxy while CLI fetches don't.</p>
-  </div>
-
-  <div class="trouble">
-    <h3>2. <code>choco install</code> fails with admin / lib-bad errors</h3>
-<pre class="code error">Chocolatey detected you are not running from an elevated command shell
-パス 'C:\ProgramData\chocolatey\lib-bad' へのアクセスが拒否されました。</pre>
-    <p><strong>Cause:</strong> You don't have an elevated shell, or your workstation policy forbids Chocolatey from writing under <code>C:\ProgramData\</code>.</p>
-    <p><strong>Fix:</strong> Don't use choco. Install cpnest from the pre-built binary instead (no admin needed, lives under your own profile).</p>
-  </div>
-
-  <div class="trouble">
-    <h3>3. PowerShell <code>curl</code> complains about arguments</h3>
-<pre class="code error">Invoke-WebRequest : 引数 'C:/work/...' を受け入れる位置指定パラメーターが見つかりません。</pre>
-    <p><strong>Cause:</strong> In PowerShell, <code>curl</code> is an alias for <code>Invoke-WebRequest</code>, which has a completely different argument grammar from the real <code>curl</code>. Flags like <code>--cacert</code> are misinterpreted as positional args.</p>
-    <p><strong>Fix:</strong> Call <code>curl.exe</code> explicitly to bypass the alias.</p>
-<pre class="code"><span class="c"># NG (hits Invoke-WebRequest)</span>
-<span class="p">&gt;</span> curl --cacert C:/work/cert.pem -L -o cpnest.exe https://...
-
-<span class="c"># OK (real curl)</span>
-<span class="p">&gt;</span> curl.exe --cacert C:/work/cert.pem -L -o cpnest.exe https://...</pre>
-  </div>
-
-  <div class="trouble">
-    <h3>4. Zscaler blocks the .exe download itself</h3>
-<pre class="code error">You are downloading exe64 filetype from a site categorized as ...</pre>
-    <p><strong>Cause:</strong> Zscaler (or a similar secure-web-gateway) flags <code>.exe</code> downloads initiated by CLI clients like <code>iwr</code> / <code>curl.exe</code>. The same URL is often allowed via the browser after a user-acknowledgement prompt.</p>
-    <p><strong>Fix:</strong> Open <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">the Releases page</a> in your browser, click through any warning, download <code>cpnest.exe</code>, then move it into <code>~/.local/bin</code>:</p>
-<pre class="code"><span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
-<span class="p">&gt;</span> Copy-Item $HOME\Downloads\cpnest.exe $HOME\.local\bin\cpnest.exe
-<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable(
-    "PATH",
-    [Environment]::GetEnvironmentVariable("PATH", "User") + ";$HOME\.local\bin",
-    "User")</pre>
-  </div>
-
-  <div class="trouble">
-    <h3>5. Panes open but the border is never violet (Copilot not found)</h3>
-    <p><strong>Cause:</strong> cpnest couldn't locate the <code>copilot</code> binary on your PATH, so each pane fell back to <code>cmd.exe</code>. The violet border is the indicator that Copilot is actually running.</p>
-    <p><strong>Fix:</strong> Point cpnest straight at the binary.</p>
-<pre class="code"><span class="p">&gt;</span> $env:CPNEST_COPILOT_BIN = "C:\path\to\copilot.exe"
-<span class="p">&gt;</span> cpnest</pre>
-    <p class="meta">To make it persistent, set the same variable via <code>[Environment]::SetEnvironmentVariable("CPNEST_COPILOT_BIN", "C:\path\to\copilot.exe", "User")</code>.</p>
-  </div>
-
-  <div class="trouble">
-    <h3>6. <code>cargo</code> is not recognized</h3>
-<pre class="code error">The term 'cargo' is not recognized as a name of a cmdlet ...</pre>
-    <p><strong>Cause:</strong> Rust / rustup is not installed. Building from source is not an option on this machine.</p>
-    <p><strong>Fix:</strong> Use the pre-built binary path above — it doesn't need a Rust toolchain, MSVC Build Tools, or even <code>git</code>.</p>
-  </div>
 </section>
 
 <section id="keys">
@@ -608,6 +527,72 @@ cwd:   ~/projects/cpnest</div>
     The selection cursor is a solid reversed-white block, rendered across the full row —
     the original motivation for building the multiplexer.
   </p>
+</section>
+
+<section id="troubleshoot" class="troubles">
+  <h2>Troubleshooting</h2>
+  <p>
+    Real-world issues people have hit installing cpnest from corporate / proxied
+    networks, with the error strings verbatim so you can find this page via
+    search. Most of these aren't cpnest bugs — they're environment mismatches
+    that resolve by switching to the manual-download path.
+  </p>
+
+  <div class="trouble">
+    <h3>1. <code>winget install</code> fails with 403 Forbidden</h3>
+<pre class="code error">Download request status is not success. 0x80190193 : Forbidden (403).</pre>
+    <p><strong>Cause:</strong> Your corporate proxy (Zscaler, Netskope, etc.) is blocking requests to <code>static.rust-lang.org</code> or other download hosts that winget reaches out to.</p>
+    <p><strong>Fix:</strong> Skip winget. Grab <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">cpnest.exe</a> from the Releases page via your browser — the browser typically gets through the proxy while CLI fetches don't.</p>
+  </div>
+
+  <div class="trouble">
+    <h3>2. <code>choco install</code> fails with admin / lib-bad errors</h3>
+<pre class="code error">Chocolatey detected you are not running from an elevated command shell
+パス 'C:\ProgramData\chocolatey\lib-bad' へのアクセスが拒否されました。</pre>
+    <p><strong>Cause:</strong> You don't have an elevated shell, or your workstation policy forbids Chocolatey from writing under <code>C:\ProgramData\</code>.</p>
+    <p><strong>Fix:</strong> Don't use choco. Install cpnest from the manual download above (no admin needed, lives under your own profile).</p>
+  </div>
+
+  <div class="trouble">
+    <h3>3. PowerShell <code>curl</code> complains about arguments</h3>
+<pre class="code error">Invoke-WebRequest : 引数 'C:/work/...' を受け入れる位置指定パラメーターが見つかりません。</pre>
+    <p><strong>Cause:</strong> In PowerShell, <code>curl</code> is an alias for <code>Invoke-WebRequest</code>, which has a completely different argument grammar from the real <code>curl</code>. Flags like <code>--cacert</code> are misinterpreted as positional args.</p>
+    <p><strong>Fix:</strong> Call <code>curl.exe</code> explicitly to bypass the alias.</p>
+<pre class="code"><span class="c"># NG (hits Invoke-WebRequest)</span>
+<span class="p">&gt;</span> curl --cacert C:/work/cert.pem -L -o cpnest.exe https://...
+
+<span class="c"># OK (real curl)</span>
+<span class="p">&gt;</span> curl.exe --cacert C:/work/cert.pem -L -o cpnest.exe https://...</pre>
+  </div>
+
+  <div class="trouble">
+    <h3>4. Zscaler blocks the .exe download itself</h3>
+<pre class="code error">You are downloading exe64 filetype from a site categorized as ...</pre>
+    <p><strong>Cause:</strong> Zscaler (or a similar secure-web-gateway) flags <code>.exe</code> downloads initiated by CLI clients like <code>iwr</code> / <code>curl.exe</code>. The same URL is often allowed via the browser after a user-acknowledgement prompt.</p>
+    <p><strong>Fix:</strong> Open <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">the Releases page</a> in your browser, click through any warning, download <code>cpnest.exe</code>, then move it into <code>~/.local/bin</code>:</p>
+<pre class="code"><span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
+<span class="p">&gt;</span> Copy-Item $HOME\Downloads\cpnest.exe $HOME\.local\bin\cpnest.exe
+<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable(
+    "PATH",
+    [Environment]::GetEnvironmentVariable("PATH", "User") + ";$HOME\.local\bin",
+    "User")</pre>
+  </div>
+
+  <div class="trouble">
+    <h3>5. Panes open but the border is never violet (Copilot not found)</h3>
+    <p><strong>Cause:</strong> cpnest couldn't locate the <code>copilot</code> binary on your PATH, so each pane fell back to <code>cmd.exe</code>. The violet border is the indicator that Copilot is actually running.</p>
+    <p><strong>Fix:</strong> Point cpnest straight at the binary.</p>
+<pre class="code"><span class="p">&gt;</span> $env:CPNEST_COPILOT_BIN = "C:\path\to\copilot.exe"
+<span class="p">&gt;</span> cpnest</pre>
+    <p class="meta">To make it persistent, set the same variable via <code>[Environment]::SetEnvironmentVariable("CPNEST_COPILOT_BIN", "C:\path\to\copilot.exe", "User")</code>.</p>
+  </div>
+
+  <div class="trouble">
+    <h3>6. <code>cargo</code> is not recognized</h3>
+<pre class="code error">The term 'cargo' is not recognized as a name of a cmdlet ...</pre>
+    <p><strong>Cause:</strong> Rust / rustup is not installed. Building from source is not an option on this machine.</p>
+    <p><strong>Fix:</strong> Use the manual download path above — it doesn't need a Rust toolchain, MSVC Build Tools, or even <code>git</code>.</p>
+  </div>
 </section>
 
 <section>
