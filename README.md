@@ -85,6 +85,12 @@ cpnest path\to\project
 | `↑` / `↓` / `j` / `k` (sidebar focused) | Move selection cursor |
 | `Enter` (on a file row) | Open the entry in `$EDITOR` (falls back to `code`) |
 | `Ctrl+Q` | Quit |
+| `Shift+Tab` | Forwarded as back-tab (`CSI Z`) — drives Copilot CLI's mode cycle |
+| `Shift+Enter` / `Ctrl+Enter` | Insert a newline in the prompt instead of submitting (sent as `ESC + CR`) |
+| Mouse wheel | Scroll history in the pane under the cursor (3 lines per tick) |
+| `Shift+PageUp` / `Shift+PageDown` | Scroll the focused pane one screen of history |
+| `Shift+↑` / `Shift+↓` | Scroll the focused pane one line of history |
+| any keystroke | Snaps the view back to the live tail |
 | anything else | Sent to the focused pane |
 
 ### Ctrl+D and EOF
@@ -92,6 +98,14 @@ cpnest path\to\project
 `Ctrl+D` is captured by the multiplexer before it reaches `copilot`, so
 it will no longer send EOF. To exit a Copilot session, use the CLI's own
 exit command or `Ctrl+W` to close the pane from the outside.
+
+### Scrollback
+
+Each pane carries 2000 lines of history. The mouse wheel and
+`Shift+PageUp` / `Shift+PageDown` / `Shift+↑↓` keys move the view back
+through it; the next keystroke you type snaps the view back to the live
+tail automatically. Plain `PageUp` / `PageDown` (no Shift) still pass
+through to `copilot` so the CLI's own paging keeps working.
 
 ## Tabs
 
