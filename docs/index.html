@@ -430,11 +430,53 @@ cwd:   ~/projects/cpnest</div>
     system shell so the multiplexer is still usable.
   </p>
 
-  <h3 style="margin-top:2rem;">From source via cargo <span class="mono" style="color:var(--copilot);font-weight:400;font-size:0.9rem;">(recommended — if you have rustup)</span></h3>
+  <h3 style="margin-top:2rem;">From source via cargo <span class="mono" style="color:var(--copilot);font-weight:400;font-size:0.9rem;">(recommended)</span></h3>
 <pre class="code"><span class="p">$</span> cargo install --git https://github.com/mitama987/cpnest</pre>
   <p style="color:var(--dim);font-size:0.92rem;">
     Builds everything (including <code>libgit2-sys</code>, which takes a minute)
-    and drops the binary in <code>~/.cargo/bin</code>. Requires MSVC Build Tools on Windows.
+    and drops the binary in <code>~/.cargo/bin</code>, which rustup adds to PATH.
+  </p>
+
+  <p style="margin-top:1.4rem;margin-bottom:0.4rem;"><strong>Don't have <code>cargo</code> yet?</strong> <span style="color:var(--dim);font-size:0.9rem;">— Windows setup (one-time)</span></p>
+  <p>
+    You need two things: the Rust toolchain (<code>rustup</code>) and a C linker
+    (MSVC Build Tools, required by <code>libgit2-sys</code>).
+  </p>
+
+  <p style="margin-top:1rem;margin-bottom:0.4rem;"><strong>1. Install rustup</strong></p>
+<pre class="code"><span class="c"># Option A: winget (fastest if your network allows it)</span>
+<span class="p">&gt;</span> winget install --id Rustlang.Rustup
+
+<span class="c"># Option B: official installer — download &amp; run in PowerShell</span>
+<span class="p">&gt;</span> iwr https://win.rustup.rs/x86_64 -OutFile $HOME\Downloads\rustup-init.exe
+<span class="p">&gt;</span> &amp; $HOME\Downloads\rustup-init.exe
+
+<span class="c"># Option C: no CLI access to rustup.rs (corporate proxy)</span>
+<span class="c">#   → open https://rustup.rs in your browser, click "64-bit",</span>
+<span class="c">#     save rustup-init.exe, then double-click it.</span></pre>
+  <p style="color:var(--dim);font-size:0.92rem;">
+    Accept the defaults (<em>Proceed with standard installation</em>). Rustup drops
+    <code>cargo</code>, <code>rustc</code>, and <code>rustup</code> under
+    <code>%USERPROFILE%\.cargo\bin</code> and adds it to your user PATH.
+  </p>
+
+  <p style="margin-top:1rem;margin-bottom:0.4rem;"><strong>2. Install MSVC Build Tools</strong></p>
+  <p>
+    Rust needs a C linker on Windows.
+    Download
+    <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/" target="_blank" rel="noopener">Build Tools for Visual Studio</a>,
+    run the installer, and tick <strong>"Desktop development with C++"</strong>.
+    This is ~3 GB but you only do it once per machine.
+  </p>
+
+  <p style="margin-top:1rem;margin-bottom:0.4rem;"><strong>3. Verify and install cpnest</strong></p>
+<pre class="code"><span class="c"># open a fresh terminal so the new PATH is picked up</span>
+<span class="p">&gt;</span> cargo --version           <span class="c"># should print "cargo 1.xx.x ..."</span>
+<span class="p">&gt;</span> cargo install --git https://github.com/mitama987/cpnest</pre>
+  <p style="color:var(--dim);font-size:0.92rem;">
+    If <code>winget</code> or the rustup installer itself is blocked by a corporate proxy
+    (symptom: <code>0x80190193 Forbidden (403)</code>), rustup installation is effectively
+    unavailable — use the <a href="#install">Manual download</a> below instead.
   </p>
 
   <h3 style="margin-top:2rem;">From source via PowerShell script <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(clone + build + copy)</span></h3>
@@ -590,8 +632,11 @@ cwd:   ~/projects/cpnest</div>
   <div class="trouble">
     <h3>6. <code>cargo</code> is not recognized</h3>
 <pre class="code error">The term 'cargo' is not recognized as a name of a cmdlet ...</pre>
-    <p><strong>Cause:</strong> Rust / rustup is not installed. Building from source is not an option on this machine.</p>
-    <p><strong>Fix:</strong> Use the manual download path above — it doesn't need a Rust toolchain, MSVC Build Tools, or even <code>git</code>.</p>
+    <p><strong>Cause:</strong> Rust / rustup is not installed.</p>
+    <p><strong>Fix A — install rustup:</strong> follow the <a href="#install">"Don't have cargo yet?" section</a> above (winget one-liner or the <code>rustup-init.exe</code> installer), reopen your terminal, then retry:</p>
+<pre class="code"><span class="p">&gt;</span> cargo --version
+<span class="p">&gt;</span> cargo install --git https://github.com/mitama987/cpnest</pre>
+    <p><strong>Fix B — when the network won't let rustup through:</strong> if <code>winget install Rustlang.Rustup</code> or <code>rustup-init.exe</code> also 403s, you're stuck behind the same proxy policy as issue #1. Use the <a href="#install">Manual download</a> path — it needs no Rust toolchain, no MSVC Build Tools, not even <code>git</code>.</p>
   </div>
 </section>
 
