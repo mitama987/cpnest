@@ -310,6 +310,9 @@
     <span class="cmd" id="install-cmd">cargo install --git https://github.com/mitama987/cpnest</span>
     <button onclick="navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);this.textContent='Copied';setTimeout(()=>this.textContent='Copy',1500);">Copy</button>
   </div>
+  <p style="color:var(--dim);font-size:0.88rem;margin-top:0.9rem;">
+    No Rust toolchain? <a href="#install">Download the pre-built <code>cpnest.exe</code></a> from the latest Release.
+  </p>
 </section>
 
 <section class="mockup-wrap" aria-label="What cpnest looks like when running">
@@ -413,19 +416,39 @@ cwd:   ~/projects/cpnest</div>
 <section id="install">
   <h2>Install</h2>
   <p>
-    cpnest is written in Rust. You need a recent Rust toolchain
-    (<a href="https://rustup.rs" target="_blank" rel="noopener">rustup</a>) and, to actually get
-    value from the integration, the <a href="https://github.com/github/copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI</a> on your <code>PATH</code>.
-    If <code>copilot</code> is not found, panes fall back to the system shell so the multiplexer is still usable.
+    You need the <a href="https://github.com/github/copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI</a> on your <code>PATH</code> for the
+    integration to be useful. If <code>copilot</code> is not found, panes fall back to the
+    system shell so the multiplexer is still usable.
   </p>
 
-  <h3 style="margin-top:2rem;">Via cargo <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(recommended)</span></h3>
-<pre class="code"><span class="c"># clone &amp; install — lands in ~/.cargo/bin</span>
-<span class="p">$</span> git clone https://github.com/mitama987/cpnest
-<span class="p">$</span> cd cpnest
-<span class="p">$</span> cargo install --path .</pre>
+  <h3 style="margin-top:2rem;">Pre-built binary <span class="mono" style="color:var(--copilot);font-weight:400;font-size:0.9rem;">(easiest — no Rust toolchain)</span></h3>
+  <p>
+    Grab <code>cpnest.exe</code> from
+    <a href="https://github.com/mitama987/cpnest/releases/latest" target="_blank" rel="noopener">the latest GitHub Release</a>
+    and drop it anywhere on your PATH. One-liner:
+  </p>
+<pre class="code"><span class="c"># download into ~/.local/bin (create it if missing)</span>
+<span class="p">&gt;</span> mkdir $HOME\.local\bin -Force
+<span class="p">&gt;</span> iwr https://github.com/mitama987/cpnest/releases/latest/download/cpnest.exe `
+    -OutFile $HOME\.local\bin\cpnest.exe
 
-  <h3 style="margin-top:2rem;">Via PowerShell script <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(Windows, installs to <code>~/.local/bin</code>)</span></h3>
+<span class="c"># make sure $HOME\.local\bin is on PATH (one-time)</span>
+<span class="p">&gt;</span> [Environment]::SetEnvironmentVariable("PATH", $env:PATH + ";$HOME\.local\bin", "User")</pre>
+  <p style="color:var(--dim);font-size:0.92rem;">
+    Reopen your terminal and <code>cpnest</code> will be available from any directory.
+    The binary is unsigned — on first run Windows SmartScreen may warn; click
+    <em>More info &rarr; Run anyway</em>, or preemptively unblock with
+    <code>Unblock-File $HOME\.local\bin\cpnest.exe</code>.
+  </p>
+
+  <h3 style="margin-top:2rem;">From source via cargo <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(if you have rustup)</span></h3>
+<pre class="code"><span class="p">$</span> cargo install --git https://github.com/mitama987/cpnest</pre>
+  <p style="color:var(--dim);font-size:0.92rem;">
+    Builds everything (including <code>libgit2-sys</code>, which takes a minute)
+    and drops the binary in <code>~/.cargo/bin</code>. Requires MSVC Build Tools on Windows.
+  </p>
+
+  <h3 style="margin-top:2rem;">From source via PowerShell script <span class="mono" style="color:var(--dim);font-weight:400;font-size:0.9rem;">(clone + build + copy)</span></h3>
 <pre class="code"><span class="p">&gt;</span> git clone https://github.com/mitama987/cpnest
 <span class="p">&gt;</span> cd cpnest
 <span class="p">&gt;</span> pwsh .\scripts\install.ps1</pre>
