@@ -1,6 +1,6 @@
 [package]
 name = "cpnest"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "GitHub Copilot CLI-aware terminal multiplexer (Windows first)"
 license = "MIT"
