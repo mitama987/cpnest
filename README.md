@@ -12,10 +12,24 @@ v0.1 — Windows only. Rust + `ratatui` + `crossterm` + `portable-pty` + `vt100`
 
 ## Install
 
-Two options — both end up with a `cpnest` binary on your PATH, so you can
+Three options — all end up with a `cpnest` binary on your PATH, so you can
 run it from any directory.
 
-**Recommended (rustup users):**
+**Easiest (no Rust toolchain needed):**
+
+Download the latest `cpnest.exe` from
+[GitHub Releases](https://github.com/mitama987/cpnest/releases/latest) and
+drop it anywhere on your PATH:
+
+```powershell
+# example: put it in ~/.local/bin
+mkdir $HOME\.local\bin -Force
+Move-Item .\cpnest.exe $HOME\.local\bin\
+```
+
+Make sure `$HOME\.local\bin` is on your PATH (or move to another dir that is).
+
+**From source (rustup users):**
 
 ```sh
 git clone https://github.com/mitama987/cpnest
