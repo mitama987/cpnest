@@ -11,12 +11,13 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 ratatui = "0.29"
-crossterm = { version = "0.28", features = ["event-stream"] }
+crossterm = { version = "0.28", features = ["event-stream", "bracketed-paste"] }
 portable-pty = "0.9"
 vt100 = "0.15"
 anyhow = "1"
 thiserror = "2"
 ignore = "0.4"
+arboard = { version = "3", default-features = false, features = ["windows-sys"] }
 
 [dependencies.git2]
 version = "0.20"
